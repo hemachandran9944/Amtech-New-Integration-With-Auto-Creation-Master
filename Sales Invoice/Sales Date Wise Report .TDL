@@ -1,0 +1,46 @@
+/*
+[Report: SalesInvoice_DataWiseReport]
+	
+ Form		:  Sales_DateWise_Form
+ 
+[Form: Sales_DateWise_Form]
+	
+Top Part		: SalesDateReport_Title
+Width			: 100 % Page
+Height			: 20 % Page
+Space Bottom	: 10 % Page 
+On				: Form Accept	: Yes	: Call	: SalesFunction
+
+[Part: SalesDateReport_Title]
+	
+ Line			: SalesDate_TitleLine,SalesNameField
+ 
+[Line: SalesDate_TitleLine]
+	
+ Field			: SalesDate_FieldTitle
+ 
+[Field: SalesDate_FieldTitle]
+	
+Use				: Form SubTitle
+Info			: "SALES VOUCHER:-"
+Skip			: Yes
+Full Width		: Yes
+Color			: Black
+Style			: Large Serif
+
+[Line:SalesNameField]
+	
+Field			: SalesNameField_Fi1,SalesDate_ValueFiled 
+
+[Field: SalesNameField_Fi1]
+	
+Use				: LongPrompt
+Info			: "ENTER A [Sales Voucher] DATE"
+Color			: Royal Blue
+Style			: Large Serif
+
+[Field: SalesDate_ValueFiled]
+	
+Use				: Short Date Field
+Storage			: SalesVoucherDate  	
+Width			: 7 % Page

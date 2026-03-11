@@ -1,0 +1,144 @@
+
+
+
+							/*Sales Status Function*/
+							
+
+[Function: SalesInvoice_StatusUpdate]
+	
+	Parameter : Sales_Ledger_invoicenumber	  : String
+	Parameter : Sales_Ledger_invoicedate      : String
+	
+	
+100	: Walk Collection	: SalesStatus_Collection
+	
+200	: End Walk 
+
+
+[Collection: SalesStatus_Collection]
+	
+	Data Source		: HTTP JSON	: @@SalesInvoice_StatusURL
+	
+	RemoteRequest	: SalesInvoice_Status_RemoteRequest	: UTF8	
+	
+	SQLObject		: "WebpostingResults:1"
+	
+	Client Only		: Yes
+	
+	
+[Report: SalesInvoice_Status_RemoteRequest]
+	
+	Form			: SalesInvoice_Status_Form_RemoteRequest
+	
+[Form : SalesInvoice_Status_Form_RemoteRequest]
+	
+	Top Parts		: SalesInvoice_Status_TopPart_RemoteRequest
+	JSONTag			: ""
+	
+[Part: SalesInvoice_Status_TopPart_RemoteRequest]
+	
+	Top Line		: SalesInvoice_Status_HTTPPost_TopLine
+	Scrolled		: Vertical
+	
+
+[Line: SalesInvoice_Status_HTTPPost_TopLine]
+	
+	Left Field		: SalesInvoice_StatusHTTPPost_TallyCode_Field,SalesInvoice_APIStatus_Name_Field,SalesInvoie_SerialNumber_Field,+
+					  SalesInvoice_VCHType_Field	
+					  
+	Explode			: CommenVariable_SalesInvoice_Status
+	
+[Field: SalesInvoice_StatusHTTPPost_TallyCode_Field]
+	
+	Set as			: $TallyCompanyCode:Company:##SVCurrentCompany	
+	JSONTag			: "tallycode"
+	
+[Field: SalesInvoice_APIStatus_Name_Field]
+	
+	Set As 			: $Name:Company:##SVCurrentCompany		
+	JSONTag			: "tallyname"
+	
+[Field: SalesInvoie_SerialNumber_Field]
+
+	Set As			: $$LicenseInfo:SerialNumber
+	JSONTag			: "tallyserialno"
+
+[Field: SalesInvoice_VCHType_Field]
+	
+	Set As			: "Sales Status"
+	JSONTag			: "requesttype"	
+	
+	
+
+
+[Part: CommenVariable_SalesInvoice_Status]
+	
+	Top Line		: CommenVariable_Sales_TopLine
+	Repeat			: CommenVariable_Sales_TopLine: CommenVaraible_Collaction
+	
+
+
+
+
+
+[Collection	: SalesInvoice_CommenVaraible_SalesMainFile]
+	
+	Data Source		: Variable	: CommonVariableUpdateSales
+	
+[Collection: CommenVaraible_Collaction]
+	
+	
+Source Collection	: SalesInvoice_CommenVaraible_SalesMainFile
+
+
+
+	  By 	  : VRNO    			: $VRNO    			
+      Compute : APIRESULT_Msg		: $APIRESULT_Msg		
+      Compute : INVOICETYPES 		: $INVOICETYPES 		
+      Compute : VRDATE    		: $VRDATE    		
+      Compute : APIRESULT_STATUS	: $APIRESULT_STATUS	
+
+	  Sort	  : @@InvoiceNumberIncr	: $VRNO2,$INVOICETYPES2
+
+
+
+
+[Line:CommenVariable_Sales_TopLine]
+	
+	Left Field		: SalesInvoice_APIRESULT_STATUS,SalesInvoice_VRDATE_field,SalesInvoice_INVOICETYPES_Field,+
+					  SalesInvoice_APIRESULT_Msg_Field,SalesInvoice_VRNO_Field
+	JSONTag			: "STATUSREPORTS"
+	
+[Field: SalesInvoice_APIRESULT_STATUS]
+	
+	Set As		: $APIRESULT_STATUS
+	JSONTag		: "APIRESULT_STATUS"
+	
+[Field: SalesInvoice_VRDATE_field]
+	
+	Set as		: $VRDATE
+	JSONTag		: "VRDATE"
+	
+[Field: SalesInvoice_INVOICETYPES_Field]
+	
+	Set as		: $INVOICETYPES 		
+	JSONTag		: "INVOICETYPES"
+	
+[Field: SalesInvoice_APIRESULT_Msg_Field]
+	
+	Set as		: $APIRESULT_Msg	
+	JSONTag		: "APIRESULT_Msg"
+	
+[Field: SalesInvoice_VRNO_Field]
+	
+	Set as		: $VRNO
+	JSONTag		: "VRNO"	
+	
+
+
+	
+	
+	
+	
+	
+	

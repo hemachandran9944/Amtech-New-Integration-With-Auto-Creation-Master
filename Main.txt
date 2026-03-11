@@ -1,0 +1,68 @@
+
+
+[#Field:Default]
+	
+	Add	: Tooltip	: $$DescName
+	  
+[#Menu: Gateway of Tally]    
+		
+	
+Add	: Key Item	: After	: @@locIndentUtilities	: @@IntegrationMenu		: D : Menu	: IntegrationAllMenu
+
+
+
+[Menu: IntegrationAllMenu]
+	
+Title		: $$LocaleString:"DownLoad Vouchers"
+
+Indent		: @@PurchaseInvoice						  	
+
+Key Item	: "DowLoad Purchase-Invoice"			: P	: Call	: PurchaseIntegration 	/*SalesVoucherTypeDateReport*/
+
+Indent		: BLANK
+
+Indent		: @@SalesInvoice
+
+Key Item	: "DowLoad Sales-Invoice"				: S	: Call	: SalesFunction			/*SalesInvoice_DataWiseReport*/
+
+Indent		: BLANK
+
+Indent		: @@AutoShudling
+
+Key Item	: "Auto-Scheduling"						: A	: Alter	: AutoSchedulingCashReceipt
+
+
+
+
+
+
+
+
+
+
+
+
+					/*Purchase Invoice*/
+
+		[Include: Purchase Invoice\Purchase Funtion .tdl]
+		[Include: Purchase Invoice\Purchase Json.tdl]
+		[Include: Purchase Invoice\Purchase Status.tdl]
+		[Include: Purchase Invoice\Date Report.tdl]
+		[Include: Purchase Invoice\SalesLedgerMaster.TDL]
+
+						/*Sales Invoice*/
+
+		[Include: Sales Invoice\Sales Function.TDL] 
+		[Include: Sales Invoice\Sales  Json.TDL] 
+		[Include: Sales Invoice\Sales Date Wise Report .TDL]
+		[Include: Sales Invoice\Sales Update.TDL]
+		[Include: Sales Invoice\Sales RemoteRequest Report.TDL]	
+		[Include: Sales Invoice\SalesLedgermasterCreation.tdl]
+
+						/*Setting*/
+
+		[Include: Setting\Add On Hit.tdl]
+		[Include: Setting\Formula UDF.tdl]
+		[Include: Setting\Auto Shudder.tdl]
+		
+

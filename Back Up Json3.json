@@ -1,0 +1,121 @@
+{
+   "message":[
+      {
+         "tallycode":"777888",
+         "tallyname":"",
+         "tallyserialno":"123456",
+         "requesttype":"Purchase",
+		 "date":"01-09-2025"
+         "purchaselist":[
+            {
+               "invoicenumber":"SINV-25-00022",
+               "invoicedate":"01-09-2025",
+               "narration":"Purchase of Network Switches",
+               "customername":"ABACUS SYSTEMS",
+               "vchtype":"Purchase-Medicines Intergration",
+               "invoicemode":"Invoice Voucher View",
+               "reference":"SINV-25-00022",
+               "salesledger":"GST Service (Purchase)",
+               "invoicevalue":45520.20,
+               "ewaybillno":"",
+               "ewaybillnodate":"",
+               "vchproductlist_pur":[
+                  {
+                     "product":"Mac Book 11 Pro",
+                     "productqty":1.0,
+                     "productrate":12000.0,
+                     "productvalue":12000.0,
+                     "AccCostcentre":[
+                        {
+                           "CCNAME":"HLL LIFE CARE SUDHISH",
+                           "CCAMOUNT":"6000.00"
+                        },
+                        {
+                           "CCNAME":"Kerala Gramin Bank(KGB)",
+                           "CCAMOUNT":"6000.00"
+                        }
+                     ]
+                  },
+                  {
+                     "product":"Dell New Model",
+                     "productqty":1.0,
+                     "productrate":24000.0,
+                     "productvalue":24000.0,
+                     "AccCostcentre":[
+                        {
+                           "CCNAME":"MILMA PROJECT KERALA",
+                           "CCAMOUNT":"12000.00"
+                        },
+                        {
+                           "CCNAME":"Kerala Gramin Bank(KGB)",
+                           "CCAMOUNT":"12000.00"
+                        }
+                     ]
+                  }
+               ],
+               "vchledgerlist_pur":[
+                  {
+                     "invoicenumber":"SINV-25-00022",
+                     "additionalledger":"Input CGST@9%",
+                     "parent":"",
+                     "rateofpercentage":"",
+                     "additionalledgervalue":3240.0
+                  },
+                  {
+                     "invoicenumber":"SINV-25-00022",
+                     "additionalledger":"Input SGST@9%",
+                     "parent":"",
+                     "rateofpercentage":"",
+                     "additionalledgervalue":3240.0
+                  }
+               ],
+               "Additionalledgerlist":[
+                  {
+                     "AdditionalLedgername":"Freight Charges",
+                     "CODE":"",
+                     "parent":"",
+                     "DRCR":"DR",
+                     "AdditionalAMOUNT":"2240.00",
+                     "ALCostcentre":[
+                        {
+                           "ALNAME":"HLL LIFE CARE SUDHISH",
+                           "ALAMOUNT":"746.67"
+                        },
+                        {
+                           "ALNAME":"MILMA PROJECT KERALA",
+                           "ALAMOUNT":"746.67"
+                        },
+                        {
+                           "ALNAME":"Kerala Gramin Bank(KGB)",
+                           "ALAMOUNT":"746.66"
+                        }
+                     ]
+                  },
+                  {
+                     "AdditionalLedgername":"Discount Allowed",
+                     "CODE":"",
+                     "parent":"",
+                     "DRCR":"DR",
+                     "AdditionalAMOUNT":"800.00",
+                     "ALCostcentre":[
+                        {
+                           "ALNAME":"ADMINISTRATIVE EXPENSES",
+                           "ALAMOUNT":"800.00"
+                        }
+                     ]
+                  }
+               ],
+               "Roundoff":[
+                  {
+                     "RoundoffNAME":"Rounded Off",
+                     "CODE":"",
+                     "parent":"",
+                     "DRCR":"DR",
+                     "RoundoffAMOUNT":"0.20"
+                  }
+               ]
+            }
+         ]
+      }
+   ]
+}

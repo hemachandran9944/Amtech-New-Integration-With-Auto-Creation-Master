@@ -1,0 +1,220 @@
+
+
+[Collection: Download_TRANS_URL_Purchase]
+	
+	Data Source  		: File JSON :@@AmtechPurchaseInvoice 
+	
+[Collection: Download_TRANS_URL_Purchase2]
+	
+	;RemoteRequest		: HTTP_POST_Download_TRANSPurchase : UTF8
+	JSON Object			: Download_TRANS_Response_pur
+	Fetch 				: .*.			
+	Client Only			: Yes	
+[Object: Download_TRANS_Response_pur]
+		
+	Collection			: message		: message
+
+[Object: message]
+
+	Storage				: tallycode		: String
+	Storage				: tallyname		: String
+	Storage				: tallyserialno	: String
+	Storage				: salesguid		: String
+	Storage				: ipaddress		: String
+	Storage				: systemname    : String
+	Storage				: createduser   : String
+	Storage				: requesttype	: String
+	Storage				: date			: String
+	
+	Collection			: purchaselist	: purchaselist
+		
+[Object: purchaselist]
+
+	Storage				: invoicenumber 		: String
+	Storage				: invoicedate			: String
+	Storage				: narration				: String
+	Storage				: customername			: String
+	Storage				: vchtype				: String
+	Storage				: invoicemode			: String
+	Storage				: reference				: String
+	Storage				: salesledger			: String
+	Storage				: deliverynoteno		: String
+	Storage				: deliverynotedate		: String
+	Storage				: dispatchdocno			: String
+	Storage				: dipatchthrough		: String
+	Storage				: destination			: String
+	Storage				: lrrnumber				: String
+	Storage				: lrrdate				: String
+	Storage				: vehiclenumber			: String
+	Storage				: ordernumber			: String
+	Storage				: orderdate				: String
+	Storage				: modeofpayment			: String
+	Storage				: otherreference		: String
+	Storage				: termsofdelivery		: String
+	Storage				: buyername				: String
+	Storage				: buyeraddress			: String
+	Storage				: country				: String
+	Storage				: buyerstate			: String
+	Storage				: placeofsupply			: String
+	Storage				: buyergstinnumber		: String
+	Storage				: deliveryname			: String
+	Storage				: deliveryaddress		: String
+	Storage				: consigneestate		: String
+	Storage				: consigneegstinnumber	: String
+	Storage				: invoicevalue			: String
+	Storage				: ewaybillno			: String
+	Storage				: ewaybillnodate		: String
+	
+	Collection			: vchproductlist_pur	: vchproductlist_pur
+	Collection			: vchledgerlist_pur		: vchledgerlist_pur
+	Collection			: Additionalledgerlist	: Additionalledgerlist
+	Collection			: Roundoff				: Roundoff
+		
+[Object: vchproductlist_pur]
+
+	Storage				: invoicenumber 		: String
+	Storage				: product				: String
+	Storage				: productdescription	: String
+	Storage				: parent				: String
+	Storage				: partno				: String
+	Storage				: productgodown			: String
+	Storage				: unit					: String
+	Storage				: Altunit				: String	
+	Storage				: productqty			: String
+	Storage				: productAltqty			: String
+	Storage				: productrate			: String
+	Storage				: producthsn			: String
+	Storage				: productigstpercentage	: String
+	Storage				: productcgstpercentage	: String
+	Storage				: productsgstpercentage	: String
+	Storage				: taxamount				: String
+	Storage				: taxableamount			: String
+	Storage				: productvalue			: String
+	
+	Collection			: AccCostcentre			: AccCostcentre
+	
+[Object: AccCostcentre]
+	
+	Storage				: CCNAME				: String
+	Storage				: CCAMOUNT				: String
+	
+	
+[Object: vchledgerlist_pur]
+
+	Storage	: invoicenumber 		: String
+	Storage	: additionalledger		: String
+	Storage	: parent				: String
+	Storage	: rateofpercentage		: String
+	Storage	: additionalledgervalue	: String
+
+
+[Object: Additionalledgerlist]
+	
+	
+    Storage : AdditionalLedgername  : String
+    Storage : DRCR                  : String
+    Storage : AdditionalAMOUNT      : String
+	
+    Collection : ALCostcentre       : ALCostcentre
+
+[Object: ALCostcentre]
+	
+    Storage : ALNAME                : String
+    Storage : ALAMOUNT              : String
+	
+
+[Object: Roundoff]
+	
+	Storage	: RoundoffNAME			: String
+	Storage	: CODE                  : String
+	Storage	: parent                : String
+    Storage	: DRCR                  : String
+    Storage	: RoundoffAMOUNT        : String
+
+
+
+
+
+
+
+
+
+[Report: HTTP_POST_Download_TRANSPurchase]
+  
+	Form  				:  HTTP_POST_Download_TRANSPurchase
+	
+	Plain JSON 			: No
+	
+	Export Empty Fields	: Yes
+		
+[Form: HTTP_POST_Download_TRANSPurchase]
+	
+    Parts 				:  HTTP_POST_Download_TRANSPurchase
+
+	JSONTag				: ""
+	
+[Part: HTTP_POST_Download_TRANSPurchase]
+
+    Lines				:  HTTP_POST_Download_TRANSPurchase
+				
+	Scroll				:  Vertical
+	
+[Line: HTTP_POST_Download_TRANSPurchase]
+
+	Fields 				:  JSONCMPTallyCode_Download_TRANSPurchase,JSONCMPTallyName_Download_TRANSPurchase,+
+						   JSONCMPTallySerial_Download_TRANSPurchase,JSONCMPTallyrequesttype_Download_TRANSPurchase
+	
+[Field: JSONCMPTallyCode_Download_TRANSPurchase]
+		
+	Set As 				:  $TallyCompanyCode:Company:##SVCurrentCompany
+				
+	JSONTag				: 	"tallycode"
+	
+[Field: JSONCMPTallyName_Download_TRANSPurchase]
+		
+	Set As 				:  $Name:Company:##SVCurrentCompany
+				
+	JSONTag				: 	"tallyname"
+	
+[Field: JSONCMPTallySerial_Download_TRANSPurchase]
+		
+	Set As 				:  $$LicenseInfo:SerialNumber
+				
+	JSONTag				: 	"tallyserialno"
+	
+[Field:  JSONCMPTallyrequesttype_Download_TRANSPurchase]
+		
+	Set As 				:  "Purchase"
+				
+	JSONTag				: 	"requesttype"
+
+	
+
+	
+[System: Formulae]
+	
+	DownloadSTKRate	: $$TgtObject:##Download_TRANS_productrate / $$TgtObject:##Download_TRANS_unit
+	
+
+
+
+	
+[Function: PurLedgerMasterCreate]
+	
+	010		: If	: $$IsEmpty:$Name:Ledger:$customername
+	020		: NEW OBJECT	: Ledger	
+	
+	030		:	SET VALUE	: Name					: $$LocaleString:$customername
+	040		:	SET VALUE	: Parent				:"Sundry Creditors"
+	
+	050		:	SET VALUE	: PRIORSTATENAME		: $$LocaleString:""
+	060		:	SET VALUE	: COUNTRYNAME			: $$LocaleString:""
+	070		:	SET VALUE	: GSTREGISTRATIONTYPE   : $$LocaleString:""
+	080		:	SET VALUE	: VATDEALERTYPE         : $$LocaleString:""
+	090		:	SET VALUE	: COUNTRYOFRESIDENCE    : $$LocaleString:""
+	100		:	SET VALUE	: LEDSTATENAME          : $$LocaleString:""
+	180 	:	Set Target:...
+	
+	190		: Create Target
+
+	200		: End If

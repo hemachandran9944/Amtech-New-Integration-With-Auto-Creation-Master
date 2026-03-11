@@ -1,0 +1,103 @@
+		
+
+
+[Collection: SalesDownLodeCollection]
+	
+ Data Source	: File JSON: @@SalesDownLodeInvoice
+ 
+[Collection: SalesDownLodeCollection1]
+	
+ ;RemoteRequest			: HTTPPost_SalesDownLode_URL
+ JSON Object			: SalesJsonObjectCollection			
+ Fetch 					: .*.			
+ Client Only			: Yes
+ 
+
+[Object: SalesJsonObjectCollection]
+	
+  Collection: message		: message
+  
+[#Object:message]
+	
+	Storage	 : tallycode		: String
+	Storage	 : tallyname		: String
+	Storage	 : tallyserialno	: String
+	Storage	 : salesguid		: String
+	Storage	 : ipaddress		: String
+	Storage	 : systemname       : String
+	Storage	 : createduser      : String
+	Storage	 : requesttype	    : String
+	Storage	 : date			    : String
+	
+	Collection	: saleslist		: saleslist
+	
+[Object: saleslist]
+	
+	Storage	: invoicenumber		: String
+	Storage	: invoicedate       : String
+	Storage	: narration         : String
+	Storage	: customername      : String
+	Storage	: vchtype           : String
+	Storage	: invoicemode       : String
+	Storage	: reference         : String
+	Storage	: salesledger       : String
+	Storage	: invoicevalue      : String
+	Storage	: ewaybillno        : String
+	Storage	: ewaybillnodate    : String
+
+	Collection : vchproductlist_Sales		: vchproductlist_Sales
+	Collection : vchledgerlist_sls			: vchledgerlist_sls
+	Collection : Additionalledgerlist_Sales	: Additionalledgerlist_Sales
+	Collection : Roundoff_Sales				: Roundoff_Sales
+	
+[Object: vchproductlist_Sales]
+	
+   Storage	: product			: String
+   Storage	: productqty        : String
+   Storage	: productrate       : String
+   Storage	: productvalue      : String
+   Storage	: productgodown		: String
+   Storage	: productunit		: String
+   
+   Collection	: Slaes_AccCostcentre	: Slaes_AccCostcentre
+   
+[Object: Slaes_AccCostcentre]
+	
+	Storage	 : CCNAME				: String
+    Storage	 : CCAMOUNT				: String
+
+[Object:vchledgerlist_sls]
+	
+	Storage	 : invoicenumber 		 : String
+	Storage	 : additionalledger		 : String
+	Storage	 : parent				 : String
+	Storage	 : rateofpercentage		 : String
+	Storage	 : additionalledgervalue : String
+	
+[Object: Additionalledgerlist_Sales]
+	
+    Storage	: AdditionalLedgername	: String
+	Storage	: CODE	                : String
+	Storage	: parent                : String
+	Storage	: DRCR                  : String
+	Storage	: AdditionalAMOUNT      : String
+		
+	Collection	: ALCostcentre_Sales: ALCostcentre_Sales
+	
+[Object: ALCostcentre_Sales]
+	
+	Storage	: ALNAME				: String
+	Storage	: ALAMOUNT				: String
+
+[Object: Roundoff_Sales]
+	
+	Storage	: RoundoffNAME			: String
+	Storage	: CODE                  : String
+	Storage	: parent                : String
+	Storage	: DRCR                  : String
+	Storage	: RoundoffAMOUNT        : String
+	
+	
+
+
+	

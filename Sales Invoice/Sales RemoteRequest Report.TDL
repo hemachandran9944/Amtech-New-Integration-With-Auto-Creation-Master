@@ -1,0 +1,53 @@
+	
+	
+	
+	
+	/*Sales Json RemoteRequest*/
+
+
+[Report: HTTPPost_SalesDownLode_URL]
+	
+	Form  				:  SalesInvoice_HTTPSPost_Form
+	
+	Plain JSON 			: No
+	
+	Export Empty Fields	: Yes
+	
+
+[Form : SalesInvoice_HTTPSPost_Form]
+	
+	Parts 				:  SalesInvoice_HTTPSPost_Parts
+
+	JSONTag				: ""
+	
+[Part: SalesInvoice_HTTPSPost_Parts]
+	
+	Line				: SalesInvoice_HTTPSPost_Line 
+	
+[Line: Line : SalesInvoice_HTTPSPost_Line]
+	
+	Fields				: SalesInvoice_TallyCode_Request,SalesInvoice_TallyName_RequestJson,+
+						  SalesInvoice_TallySerialNumber_Request,SalesInvoice_Voucher_TypeRequest
+	
+[Field: SalesInvoice_TallyCode_Request]
+	
+	Set As 				:  $TallyCompanyCode:Company:##SVCurrentCompany			
+	JSONTag				:  "tallycode"
+	
+[Field: SalesInvoice_TallyName_RequestJson]
+	
+	Set As 				:  $Name:Company:##SVCurrentCompany			
+    JSONTag				:  "tallyname"
+	
+[Field: SalesInvoice_TallySerialNumber_Request]
+	
+	Set As 				:  $$LicenseInfo:SerialNumber		
+	JSONTag				:  "tallyserialno"
+	
+[Field: SalesInvoice_Voucher_TypeRequest]
+	
+			
+	Set As 				:  "Sales"				
+	JSONTag				:  "requesttype"
+
+	

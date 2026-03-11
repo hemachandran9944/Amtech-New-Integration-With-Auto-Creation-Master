@@ -1,0 +1,118 @@
+[Function:UpdateStatusPurchase]
+
+Parameter:Download_TRANS_invoicenumber:String
+Parameter:Download_TRANS_invoicedate:String
+
+200	: Walk Collection:UpdateCollection_MainPurchase
+300	: End Walk
+
+[System: Formulae]
+	
+	VIMTRANSDownloadURLPurStatus	: $PurchStatusDownloadURL:Company:##SVCurrentCompany
+
+[Collection:UpdateCollection_MainPurchase]
+
+	Data Source		: HTTP JSON									: @@VIMTRANSDownloadURLPurStatus
+	RemoteRequest	: UpdateApi_HTTPRequestResponseDataPurchase : UTF8
+	SQLObject		: "WebpostingResults:1"
+	Client Only		: Yes
+
+[Report:UpdateApi_HTTPRequestResponseDataPurchase]
+
+	Forms			: UpdateApi_HTTPRequestResponseDataPurchase
+
+[Form:UpdateApi_HTTPRequestResponseDataPurchase]
+
+	Top Parts		: UpdateApi_HTTPRequestResponseDataPurchase
+	JSONTag			: ""
+
+[Part:UpdateApi_HTTPRequestResponseDataPurchase]
+
+	Top Lines		: UpdateApi_HTTPRequestData_distributor_codePurchase
+	Scrolled		: Vertical
+
+[Line:UpdateApi_HTTPRequestData_distributor_codePurchase]
+
+	Left Fields		: UpdateApi_ClientTypePurchase,UpdateApi__APIClientNamePurchase,UpdateApi_InvoiceTypePurchase,+
+						UpdateApi_InvoiceValuePurchase
+	Explode			: UpdateApi_StatusPurchase
+
+
+[Field:UpdateApi_ClientTypePurchase]
+	
+	Set As			: $VIMCompanyCode:Company:##SVCurrentCompany
+				
+	JSONTag			: "tallycode"
+
+[Field:UpdateApi__APIClientNamePurchase]
+
+	Set As 			: $Name:Company:##SVCurrentCompany
+				
+	JSONTag			: "tallyname"
+
+[Field:UpdateApi_InvoiceTypePurchase]
+
+	Set As			: $$LicenseInfo:SerialNumber
+				
+	JSONTag			: "tallyserialno"
+
+[Field:UpdateApi_InvoiceValuePurchase]
+
+	Set As			: "Purchase Status"				
+	JSONTag			: "requesttype"
+
+
+[Part:UpdateApi_StatusPurchase]
+
+	Top Lines		: APIRESULT_STATUSLinePurchase
+	Repeat			: APIRESULT_STATUSLinePurchase:ReadVoucherUpdateFile1Purchase
+	Scrolled		: Vertical
+
+[Collection:ReadVoucherUpdateFileMainPurchase]
+	
+	Data Source		: Variable : CommonVariableUpdatePur
+
+[Collection:ReadVoucherUpdateFile1Purchase]
+
+	Source Collection	: ReadVoucherUpdateFileMainPurchase
+
+	By		:	VRNO				: $VRNo
+	Compute	: 	APIRESULT_Msg		: $APIRESULT_Msg
+	Compute	:	INVOICETYPES		: $INVOICETYPES
+	Compute	:	VRDATE				: $VRDATE
+	Compute	:	APIRESULT_STATUS	: $APIRESULT_STATUS	
+
+
+	Sort	: @@InvoiceNumberIncr	: $VRNO2,$INVOICETYPES2
+
+
+[Line:APIRESULT_STATUSLinePurchase]
+
+	Left Fields	: APIRESULT_STATUSPurchase,APIRESULT_MsgPurchase,S_INVOICETYPES2NewPurchase,VRDATEPurchase,VRNOFieldPurchase
+	JSONTag		: "STATUSREPORTS"
+
+
+[Field:APIRESULT_STATUSPurchase]
+
+	Set As		: $APIRESULT_STATUS
+	JSONTag		: "APIRESULT_STATUS"
+
+[Field:APIRESULT_MsgPurchase]
+
+	Set As		: $APIRESULT_Msg
+	JSONTag		: "APIRESULT_Msg"
+
+[Field:S_INVOICETYPES2NewPurchase]
+
+	Set As		: $INVOICETYPES
+	JSONTag     : "INVOICETYPES"
+
+[Field:VRDATEPurchase]
+
+	Set as		: $VRDATE
+	JSONTag		: "VRDATE"
+
+[Field:VRNOFieldPurchase]
+
+	Set as		: $VRNo
+	JSONTag		: "VRNO"
