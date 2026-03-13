@@ -34,10 +34,12 @@
 	Storage				: invoicedate			: String
 	Storage				: narration				: String
 	Storage				: customername			: String
+	Storage				: customerParent		: String
 	Storage				: vchtype				: String
 	Storage				: invoicemode			: String
 	Storage				: reference				: String
 	Storage				: salesledger			: String
+	Storage				: salesledgerParent		: String
 	Storage				: deliverynoteno		: String
 	Storage				: deliverynotedate		: String
 	Storage				: dispatchdocno			: String
@@ -66,7 +68,7 @@
 	Storage				: ewaybillnodate		: String
 	
 	Collection			: vchproductlist_pur	: vchproductlist_pur
-	Collection			: vchledgerlist_pur		: vchledgerlist_pur
+	Collection			: Taxlist_pur			: Taxlist_pur
 	Collection			: Additionalledgerlist	: Additionalledgerlist
 	Collection			: Roundoff				: Roundoff
 		
@@ -78,7 +80,7 @@
 	Storage				: parent				: String
 	Storage				: partno				: String
 	Storage				: productgodown			: String
-	Storage				: unit					: String
+	Storage				: productunit			: String
 	Storage				: Altunit				: String	
 	Storage				: productqty			: String
 	Storage				: productAltqty			: String
@@ -99,11 +101,11 @@
 	Storage				: CCAMOUNT				: String
 	
 	
-[Object: vchledgerlist_pur]
+[Object: Taxlist_pur]
 
 	Storage	: invoicenumber 		: String
-	Storage	: additionalledger		: String
-	Storage	: parent				: String
+	Storage	: Taxledger				: String
+	Storage	: Taxparent				: String
 	Storage	: rateofpercentage		: String
 	Storage	: additionalledgervalue	: String
 
@@ -112,6 +114,7 @@
 	
 	
     Storage : AdditionalLedgername  : String
+	Storage : Additionalparent		: String
     Storage : DRCR                  : String
     Storage : AdditionalAMOUNT      : String
 	
@@ -126,6 +129,7 @@
 [Object: Roundoff]
 	
 	Storage	: RoundoffNAME			: String
+	Storage	: RoundoffParent		: String
 	Storage	: CODE                  : String
 	Storage	: parent                : String
     Storage	: DRCR                  : String
@@ -197,24 +201,3 @@
 	
 
 
-
-	
-[Function: PurLedgerMasterCreate]
-	
-	010		: If	: $$IsEmpty:$Name:Ledger:$customername
-	020		: NEW OBJECT	: Ledger	
-	
-	030		:	SET VALUE	: Name					: $$LocaleString:$customername
-	040		:	SET VALUE	: Parent				:"Sundry Creditors"
-	
-	050		:	SET VALUE	: PRIORSTATENAME		: $$LocaleString:""
-	060		:	SET VALUE	: COUNTRYNAME			: $$LocaleString:""
-	070		:	SET VALUE	: GSTREGISTRATIONTYPE   : $$LocaleString:""
-	080		:	SET VALUE	: VATDEALERTYPE         : $$LocaleString:""
-	090		:	SET VALUE	: COUNTRYOFRESIDENCE    : $$LocaleString:""
-	100		:	SET VALUE	: LEDSTATENAME          : $$LocaleString:""
-	180 	:	Set Target:...
-	
-	190		: Create Target
-
-	200		: End If

@@ -44,11 +44,11 @@ Key Item	: "Auto-Scheduling"						: A	: Alter	: AutoSchedulingCashReceipt
 
 					/*Purchase Invoice*/
 
-		[Include: Purchase Invoice\Purchase Funtion .tdl]
+		[Include: Purchase Invoice\PurchaseInvoiceFunction.TDL]
 		[Include: Purchase Invoice\Purchase Json.tdl]
 		[Include: Purchase Invoice\Purchase Status.tdl]
 		[Include: Purchase Invoice\Date Report.tdl]
-		[Include: Purchase Invoice\SalesLedgerMaster.TDL]
+		[Include: Purchase Invoice\AutoCreation Master.TDL]
 
 						/*Sales Invoice*/
 

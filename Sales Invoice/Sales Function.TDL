@@ -35,10 +35,12 @@ Variable	: SalesFunction_Check	: String
 		Variable : Sales_Ledger_invoicedate             : String
 		Variable : Sales_Ledger_narration               : String
 		Variable : Sales_Ledger_customername            : String
+		Variable : Sales_Ledger_customernameParent		: String
 		Variable : Sales_Ledger_vchtype                 : String
 		Variable : Sales_Ledger_invoicemode             : String
 		Variable : Sales_Ledger_reference               : String
 		Variable : Sales_Ledger_salesledger             : String
+		Variable : Sales_Ledger_salesledgerParent		: String
 		Variable : Sales_Ledger_invoicevalue            : String
 		Variable : Sales_Ledger_ewaybillno              : String
 		Variable : Sales_Ledger_ewaybillnodate          : String
@@ -66,7 +68,8 @@ Variable	: SalesFunction_Check	: String
 						/*GST Ledger Variable*/
 						
 		Variable : Sales_GST_Ledger_invoicenumber 			: String
-		Variable : Sales_GST_Ledger_additionalledger		: String
+		Variable : Sales_GST_Ledger_Taxledger				: String
+		Variable : Sales_GST_Ledger_TaxLedgerParent			: String
 		Variable : Sales_GST_Ledger_parent				    : String
 		Variable : Sales_GST_Ledger_rateofpercentage		: String
 		Variable : Sales_GST_Ledger_additionalledgervalue   : String
@@ -75,6 +78,7 @@ Variable	: SalesFunction_Check	: String
 					/*Additionalledgerlist Varaible*/
 					
 		Variable : Sales_Additionalledgerlist_AdditionalLedgername	: String
+		Variable : Sales_Additionalledgerlist_AdditionalLedgernameParent: String
 		Variable : Sales_Additionalledgerlist_CODE	                : String
 		Variable : Sales_Additionalledgerlist_parent                : String
 		Variable : Sales_Additionalledgerlist_DRCR                  : String
@@ -89,6 +93,7 @@ Variable	: SalesFunction_Check	: String
 						/*Round_Off Leger*/
 						
 		Variable : Sales_Round_Off_RoundoffNAME			: String
+		Variable : Sales_Round_Off_RoundoffParent		: String
 		Variable : Sales_Round_Off_CODE                 : String
 		Variable : Sales_Round_Off_parent               : String
 		Variable : Sales_Round_Off_DRCR                 : String
@@ -157,8 +162,13 @@ Variable	: SalesFunction_Check	: String
 	500			: Walk Collection	: saleslist	
 	
 	
-	501			:  Set	: Sales_Ledger_customername   	: $$LocaleString:$customername  
-	502			:  Set	: Sales_Ledger_salesledger    	: $$LocaleString:$salesledger
+	501			:  Set	: Sales_Ledger_customername   		: $$LocaleString:$customername  
+	502A		:  Set	: Sales_Ledger_customernameParent	: $$LocaleString:$customernameParent
+	502B		:  Set	: Sales_Ledger_salesledger 			: $$LocaleString:$salesledger 
+	502BB		:  Set	: Sales_Ledger_salesledgerParent 	: $$LocaleString:$salesledgerParent
+	
+
+
 	504			:  Call	: SalesLedger_MasterCreate  
 	505			:  Call	: SalesAccountLedgerMasterCreation	
 	
@@ -167,15 +177,17 @@ Variable	: SalesFunction_Check	: String
 	506AA   	:  Set : Sales_StockItemMaster_product 	: $$LocaleString:$product
 	506B    	:  Set : Sales_Master_productgodown		: $$LocaleString:$productgodown
 	862BB		:  Set : Sales_Master_productunit		: $$LocaleString:$productunit 
+	
 	506BBBB		:  Call: UnitsMaster_Creation
 	506BBBBB	:  Call: MasterStocItemCreation
 	506BBBBBB	:  Call: Master_Productgodown_Creation
 	
 	506BBBBBBB	: End Walk	
 	
-	507A		: Walk Collection	: vchledgerlist_sls
+	507A		: Walk Collection	: Taxlist_Sales
 	
-	507AA 		: Set  : Sales_GST_Ledger_additionalledger : $$LocaleString:$additionalledger
+	507AA 		: Set  : Sales_GST_Ledger_Taxledger			: $$LocaleString:$Taxledger
+	507AAA 		: Set  : Sales_GST_Ledger_TaxLedgerParent	: $$LocaleString:$TaxLedgerParent
 	507BB 		: Call : SalesCGST_LedgerCreation
 	508A 		: Call : SalesSGST_LedgerCreation
 	508B 		: Call : SalesIGST_LedgerCreation
@@ -187,7 +199,8 @@ Variable	: SalesFunction_Check	: String
 
 	509B		: Walk Collection	: Roundoff_Sales
 
-	509BB		: Set  : Sales_Round_Off_RoundoffNAME : $$LocaleString:$RoundoffNAME
+	509BB		: Set  : Sales_Round_Off_RoundoffNAME   : $$LocaleString:$RoundoffNAME
+	509BBB		: Set  : Sales_Round_Off_RoundoffParent : $$LocaleString:$RoundoffParent
     509C        : Call : SalesRound_MasterCreation
 	509D        : End Walk
 	
@@ -216,6 +229,8 @@ Variable	: SalesFunction_Check	: String
 	610		: Set	: Sales_Ledger_invoicevalue   	: $$LocaleString:$invoicevalue  
 	620		: Set	: Sales_Ledger_ewaybillno     	: $$LocaleString:$ewaybillno    
 	630		: Set	: Sales_Ledger_ewaybillnodate 	: $$LocaleString:$ewaybillnodate
+	
+	
 	
 	631		: If: (Not($$IsEmpty:##Sales_Ledger_customername))  	
     
@@ -324,18 +339,24 @@ Variable	: SalesFunction_Check	: String
 	
 	1130	: End Walk  /*vchproductlist_Sales*/
 
-	1300	: Walk Collection	: vchledgerlist_sls
+
+	1300	: Walk Collection	: Taxlist_Sales
 	
 	1310	: Set : Sales_GST_Ledger_invoicenumber 			: $$Localestring:$invoicenumber 		 
-    1320	: Set : Sales_GST_Ledger_additionalledger		: $$Localestring:$additionalledger		 
+    1320	: Set : Sales_GST_Ledger_Taxledger				: $$Localestring:$Taxledger
+	1325	: Set : Sales_GST_Ledger_TaxLedgerParent		: $$Localestring:$TaxLedgerParent
     1330	: Set : Sales_GST_Ledger_parent				    : $$Localestring:$parent				 
     1340	: Set : Sales_GST_Ledger_rateofpercentage		: $$Localestring:$rateofpercentage		 
-    1350	: Set : Sales_GST_Ledger_additionalledgervalue  : $$Localestring:$additionalledgervalue 
+    1345	: Set : Sales_GST_Ledger_additionalledgervalue  : $$Localestring:$additionalledgervalue 
 	
-	1351	: If: (Not($$IsEmpty:##Sales_GST_Ledger_additionalledger))
+	
+	1347	: Msg Box	: "1347" : ##Sales_GST_Ledger_rateofpercentage 
+	
+
+	1350	: If: (Not($$IsEmpty:##Sales_GST_Ledger_Taxledger))
 	
 	1360	: INSERT COLLECTION OBJECT				: LEDGERENTRIES
-	1370	: SET VALUE		: LedgerName			: ##Sales_GST_Ledger_additionalledger
+	1370	: SET VALUE		: LedgerName			: ##Sales_GST_Ledger_Taxledger
 	1380	: SET VALUE		: ISDEEMEDPOSITIVE		: Yes
 	1390	: SET VALUE		: LEDGERFROMITEM		: No
 	1410	: SET VALUE		: REMOVEZEROENTRIES		: No
@@ -371,17 +392,18 @@ Variable	: SalesFunction_Check	: String
 	1600	: Walk Collection	: Additionalledgerlist_Sales
 	
 	1610	: Set : Sales_Additionalledgerlist_AdditionalLedgername			: $$Localestring:$AdditionalLedgername
+	1615	: Set : Sales_Additionalledgerlist_AdditionalLedgernameParent	: $$Localestring:$AdditionalLedgernameParent			
     1620	: Set : Sales_Additionalledgerlist_CODE	                        : $$Localestring:$CODE	            
     1630	: Set : Sales_Additionalledgerlist_parent                       : $$Localestring:$parent              
     1640	: Set : Sales_Additionalledgerlist_DRCR                         : $$Localestring:$DRCR                
     1650	: Set : Sales_Additionalledgerlist_AdditionalAMOUNT             : $$Localestring:$AdditionalAMOUNT 
 				
-	1670   : Insert Collection Object								: LEDGERENTRIES
-	
-	1680 	: Set Value : LEDGERNAME								: $$LocaleString:##Sales_Additionalledgerlist_AdditionalLedgername
-	1690 	: Set Value : ISDEEMEDPOSITIVE							: Yes
-	1700 	: Set Value	: ISLASTDEEMEDPOSITIVE						: Yes
-	1710 	: Set Value : AMOUNT									: $$AsAmount:##Sales_Additionalledgerlist_AdditionalAMOUNT*-1
+	1670   : Insert Collection Object										: LEDGERENTRIES
+			
+	1680 	: Set Value : LEDGERNAME										: $$LocaleString:##Sales_Additionalledgerlist_AdditionalLedgername
+	1690 	: Set Value : ISDEEMEDPOSITIVE									: Yes
+	1700 	: Set Value	: ISLASTDEEMEDPOSITIVE								: Yes
+	1710 	: Set Value : AMOUNT											: $$AsAmount:##Sales_Additionalledgerlist_AdditionalAMOUNT*-1
 	
 	1720 	: Walk Collection		: ALCostcentre_Sales
 	
@@ -404,12 +426,13 @@ Variable	: SalesFunction_Check	: String
 
 	1830	: Walk Collection	: Roundoff_Sales
 	
-	1840	: Set : Sales_Round_Off_RoundoffNAME	: $$LocaleString:$RoundoffNAME			
+	1840	: Set : Sales_Round_Off_RoundoffNAME	: $$LocaleString:$RoundoffNAME
+	1845	: Set : Sales_Round_Off_RoundoffParent	: $$LocaleString:$RoundoffParents
 	1850	: Set : Sales_Round_Off_CODE            : $$LocaleString:$CODE                
 	1860	: Set : Sales_Round_Off_parent          : $$LocaleString:$parent              
 	1870	: Set : Sales_Round_Off_DRCR            : $$LocaleString:$DRCR                
-	1880	: Set : Sales_Round_Off_RoundoffAMOUNT  : $$LocaleString:$RoundoffAMOUNT   
-	
+	1880	: Set : Sales_Round_Off_RoundoffAMOUNT  : $$LocaleString:$RoundoffAMOUNT  
+
 
 	1900	: Insert Collection Object				: LEDGERENTRIES
 	1910	: Set Value : LEDGERNAME				: ##Sales_Round_Off_RoundoffNAME

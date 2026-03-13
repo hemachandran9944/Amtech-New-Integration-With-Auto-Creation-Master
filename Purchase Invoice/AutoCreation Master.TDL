@@ -1,0 +1,197 @@
+
+	
+[Function: PurLedgerMasterCreate]
+	
+	010		: If	: $$IsEmpty:$Name:Ledger:$customername
+	020		: NEW OBJECT	: Ledger	
+	
+	030		:	SET VALUE	: Name					: $$LocaleString:$customername
+	040		:	SET VALUE	: Parent				:"Sundry Creditors"
+	
+	050		:	SET VALUE	: PRIORSTATENAME		: $$LocaleString:""
+	060		:	SET VALUE	: COUNTRYNAME			: $$LocaleString:""
+	070		:	SET VALUE	: GSTREGISTRATIONTYPE   : $$LocaleString:""
+	080		:	SET VALUE	: VATDEALERTYPE         : $$LocaleString:""
+	090		:	SET VALUE	: COUNTRYOFRESIDENCE    : $$LocaleString:""
+	100		:	SET VALUE	: LEDSTATENAME          : $$LocaleString:""
+	180 	:	Set Target:...
+	
+	190		: Create Target
+
+	200		: End If
+	
+	210		: Log	: $customername
+
+
+
+
+[Function: PurchaseAcccountsLedger_AutoCreation]
+	
+
+	010 : If : NOT $$IsEmpty:##Download_TRANS_salesledger 
+	
+        020 : If : NOT $$IsObjectExists:Ledger:##Download_TRANS_salesledger
+		
+            030 : NEW OBJECT : Ledger
+            040 : SET VALUE  : Name                : ##Download_TRANS_salesledger
+            050 : SET VALUE  : Parent              : "Purchase Accounts"
+			060 : Set Target : ...	
+            070 : CREATE TARGET
+        080 : End If
+    090 : End If
+	
+
+
+
+
+[Function: MsaterUnit_AutoCreation]
+	
+	
+
+1000 : If : NOT $$IsObjectExists:Unit:##Download_TRANS_productunit
+        
+        1002 : NEW OBJECT : Unit		
+        1003 : SET VALUE : Symbol         : ##Download_TRANS_productunit
+        1003A: SET VALUE : FormalName     : ##Download_TRANS_productunit
+        1004 : SET VALUE : IsSimpleUnit   : Yes	
+        1004A: SET VALUE : DecimalPlaces  : 0
+        
+        1005 : CREATE TARGET		
+        
+    1010 : End If
+	
+
+
+
+[Function: MasterStocItem_AutoCreation]
+	
+		
+				/*StacItem*/
+
+	010 : If : NOT $$IsObjectExists:StockItem:##Download_TRANS_product
+        020 : NEW OBJECT : StockItem
+        030 : SET VALUE  : Name      : $$LocaleString:##Download_TRANS_product
+        040 : SET VALUE  : Parent    : $$LocaleString:$parent
+        
+
+        050 : SET VALUE  : BaseUnits : $$LocaleString:##Download_TRANS_productunit
+        
+        060 : CREATE TARGET
+    070 : End If
+
+
+	
+
+
+[Function: MasterProducGowdown_AutoCreation]
+	
+	
+   010 : If : NOT $$IsObjectExists:Godown:##Download_TRANS_productgodown
+        
+        020 : NEW OBJECT : Godown
+        030 : SET VALUE  : Name    : $$LocaleString:$Productgodown
+        040 : SET VALUE  : Parent : " Primary"
+        
+        070 : CREATE TARGET
+
+075 : End If
+
+
+
+
+[Function: MasterCGST_LedgerCreation]
+		
+	
+	
+	
+010 : If : NOT $$IsObjectExists:Ledger:##Download_TRANS_additionalledger
+	
+	020		: NEW OBJECT	: Ledger	
+	
+	030		: SET VALUE	: Name					: $$LocaleString:"Output CGST%9"
+	040		: SET VALUE	: Parent				: $$LocaleString:"Duties & Taxes"
+	050		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
+	060		: SET VALUE	: GSTDUTYHEAD           : $$LocaleString:"Central Tax"
+	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:"9"
+	180 	: Set Target:...
+	190		: Create Target
+
+200		: End If
+
+
+
+
+
+
+
+[Function: MasterSGST_LedgerCreation]
+	
+	
+	010 : If : NOT $$IsObjectExists:Ledger:##Download_TRANS_additionalledger
+	
+	020		: NEW OBJECT	: Ledger	
+	
+	030		: SET VALUE	: Name					: $$LocaleString:"Output SGST%9"
+	040		: SET VALUE	: Parent				: $$LocaleString:"Duties & Taxes"
+	050		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
+	060		: SET VALUE	: GSTDUTYHEAD           : $$LocaleString:"State Tax"
+	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:"9"
+	180 	: Set Target:...
+	190		: Create Target
+
+	200		: End If
+	
+
+
+
+
+
+[Function: MasterIGST_LedgerCreation]
+	
+	
+
+
+	010 : If : NOT $$IsObjectExists:Ledger:##Download_TRANS_additionalledger
+	
+	020		: NEW OBJECT	: Ledger	
+	
+	030		: SET VALUE	: Name					: $$LocaleString:"IGST%18"
+	040		: SET VALUE	: Parent				: $$LocaleString:"Duties & Taxes"
+	050		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
+	060		: SET VALUE	: GSTDUTYHEAD           : $$LocaleString:""
+	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:"18"
+	180 	: Set Target:...
+	190		: Create Target
+
+	200		: End If
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Function: RoundOff_MasterCreation]
+	
+	
+	
+
+	
+    010 : If : NOT $$IsObjectExists:Ledger:##RoundOff_RoundoffNAME 
+	
+
+        020 : NEW OBJECT : Ledger
+        030 : SET VALUE  : Name             : "Round Off"
+        040 : SET VALUE  : Parent           : "Indirect Expenses"
+        
+        080 : CREATE TARGET
+        
+    090 : End If

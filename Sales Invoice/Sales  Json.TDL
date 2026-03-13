@@ -37,16 +37,18 @@
 	Storage	: invoicedate       : String
 	Storage	: narration         : String
 	Storage	: customername      : String
+	Storage	: customernameParent: String
 	Storage	: vchtype           : String
 	Storage	: invoicemode       : String
 	Storage	: reference         : String
 	Storage	: salesledger       : String
+	Storage	: salesledgerParent : String
 	Storage	: invoicevalue      : String
 	Storage	: ewaybillno        : String
 	Storage	: ewaybillnodate    : String
 
 	Collection : vchproductlist_Sales		: vchproductlist_Sales
-	Collection : vchledgerlist_sls			: vchledgerlist_sls
+	Collection : Taxlist_Sales				: Taxlist_Sales
 	Collection : Additionalledgerlist_Sales	: Additionalledgerlist_Sales
 	Collection : Roundoff_Sales				: Roundoff_Sales
 	
@@ -66,21 +68,24 @@
 	Storage	 : CCNAME				: String
     Storage	 : CCAMOUNT				: String
 
-[Object:vchledgerlist_sls]
+[Object:Taxlist_Sales]
 	
 	Storage	 : invoicenumber 		 : String
-	Storage	 : additionalledger		 : String
+	Storage	 : Taxledger		 	 : String
+	Storage	 : TaxLedgerParent		 : String
 	Storage	 : parent				 : String
-	Storage	 : rateofpercentage		 : String
+	Storage	 : rateofpercentage		 : Number
 	Storage	 : additionalledgervalue : String
+	
 	
 [Object: Additionalledgerlist_Sales]
 	
-    Storage	: AdditionalLedgername	: String
-	Storage	: CODE	                : String
-	Storage	: parent                : String
-	Storage	: DRCR                  : String
-	Storage	: AdditionalAMOUNT      : String
+    Storage	: AdditionalLedgername		: String
+	Storage	: CODE	                	: String
+	Storage	: AdditionalLedgernameParent: String
+	Storage	: parent                	: String
+	Storage	: DRCR                  	: String
+	Storage	: AdditionalAMOUNT      	: String
 		
 	Collection	: ALCostcentre_Sales: ALCostcentre_Sales
 	
@@ -92,6 +97,7 @@
 [Object: Roundoff_Sales]
 	
 	Storage	: RoundoffNAME			: String
+	Storage	: RoundoffParent		: String
 	Storage	: CODE                  : String
 	Storage	: parent                : String
 	Storage	: DRCR                  : String
