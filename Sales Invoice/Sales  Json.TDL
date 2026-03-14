@@ -55,6 +55,7 @@
 [Object: vchproductlist_Sales]
 	
    Storage	: product			: String
+   Storage	: productgroup		: String
    Storage	: productqty        : String
    Storage	: productrate       : String
    Storage	: productvalue      : String
@@ -76,7 +77,7 @@
 	Storage	 : parent				 : String
 	Storage	 : rateofpercentage		 : Number
 	Storage	 : additionalledgervalue : String
-	
+		
 	
 [Object: Additionalledgerlist_Sales]
 	

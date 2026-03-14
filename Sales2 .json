@@ -1,0 +1,131 @@
+{
+    "message": [
+        {
+            "tallycode": "777888",
+            "tallyname": "",
+            "tallyserialno": "123456",
+            "requesttype": "Sales",
+            "date": "01-09-2025",
+            "saleslist": [
+                {
+                    "invoicenumber": "SINV-25-00071",
+                    "invoicedate": "01-03-2026",
+                    "narration": "Inv No. GST/792/24-25 - Receipt of emery sheet G400 & G320",
+                    "customername":"Amtech",
+                    "customernameParent": "Sundry Debtors",
+                    "vchtype": "BANGLORE SALES",
+                    "invoicemode": "Invoice Voucher View",
+                    "reference": "SINV-25-00022",
+                    "salesledger": "Infotech ACS",
+                    "salesledgerParent": "Sales Accounts",
+                    "invoicevalue": 45520.20,
+                    "ewaybillno": "",
+                    "ewaybillnodate": "",
+                    "vchproductlist_Sales": [
+                        {
+                            "product": "CISCO1841 ,SN :FHK115023NZ Testing",
+							"productgroup":"Testing Vishnu",
+                            "productqty": 1.0,
+                            "productrate": 12000.0,
+                            "productvalue": 12000.0,
+                            "productgodown": " Main Location Testing",
+                            "productunit": "GMS",
+                            "Slaes_AccCostcentre": [
+                                {
+                                    "CCNAME": "HLL LIFE CARE SUDHISH",
+                                    "CCAMOUNT": "6000.00"
+                                },
+                                {
+                                    "CCNAME": "Kerala Gramin Bank(KGB)",
+                                    "CCAMOUNT": "6000.00"
+                                }
+                            ]
+                        },
+                        {
+                            "product": "Dell E6320 Palmrest Touchpad+Fingerprint Testing",
+							"productgroup":"Testing Vishnu",
+                            "productqty": 1.0,
+                            "productrate": 24000.0,
+                            "productvalue": 24000.0,
+                            "productgodown": " Main Location Testing",
+                            "productunit": "GMS",
+                            "Slaes_AccCostcentre": [
+                                {
+                                    "CCNAME": "MILMA PROJECT KERALA",
+                                    "CCAMOUNT": "12000.00"
+                                },
+                                {
+                                    "CCNAME": "Kerala Gramin Bank(KGB)",
+                                    "CCAMOUNT": "12000.00"
+                                }
+                            ]
+                        }
+                    ],
+                    "Taxlist_Sales": [
+                        {
+                            "invoicenumber":"SINV-25-00065",
+                            "Taxledger":"Output  CGST",
+                            "TaxLedgerParent": "Duties & Taxes",
+                            "rateofpercentage": "9",
+                            "additionalledgervalue": 3240.0
+                        },
+                        {
+                            "invoicenumber": "SINV-25-00065",
+                            "Taxledger": "Output  SGST",
+                            "TaxLedgerParent": "Duties & Taxes",
+                            "rateofpercentage": "9",
+                            "additionalledgervalue": 3240.0
+                        }
+                    ],
+                    "Additionalledgerlist_Sales": [
+                        {
+                            "AdditionalLedgername": "Freight Charges",
+                            "AdditionalLedgernameParent": "Shipment Clearence Expenses",
+                            "CODE": "",
+                            "parent": "",
+                            "DRCR": "CR",
+                            "AdditionalAMOUNT": "2240.00",
+                            "ALCostcentre_Sales": [
+                                {
+                                    "ALNAME": "HLL LIFE CARE SUDHISH",
+                                    "ALAMOUNT": "746.67"
+                                },
+                                {
+                                    "ALNAME": "MILMA PROJECT KERALA",
+                                    "ALAMOUNT": "746.67"
+                                },
+                                {
+                                    "ALNAME": "Kerala Gramin Bank(KGB)",
+                                    "ALAMOUNT": "746.66"
+                                }
+                            ]
+                        },
+                        {
+                            "AdditionalLedgername": "Discount Allowed",
+                            "AdditionalLedgerParent": "Indirect Expenses",
+                            "CODE": "",
+                            "parent": "",
+                            "DRCR": "DR",
+                            "AdditionalAMOUNT": "800.00",
+                            "ALCostcentre_Sales": [
+                                {
+                                    "ALNAME": "ADMINISTRATIVE EXPENSES",
+                                    "ALAMOUNT": "800.00"
+                                }
+                            ]
+                        }
+                    ],
+                    "Roundoff_Sales": [
+                        {
+                            "RoundoffNAME": "Round Off Again Testing",
+                            "RoundoffParent": "Indirect Expenses",
+                            "CODE": "",
+                            "DRCR": "DR",
+                            "RoundoffAMOUNT": "0.20"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -5,7 +5,7 @@
 			/*Sales Custamer Ledger Creation*/
 			
 
-    011a    : IF                : $$IsEmpty:($$Name:Group:$customernameParent) AND (NOT $$IsEmpty:$customernameParent)
+    011    : IF                : $$IsEmpty:($$Name:Group:$customernameParent) AND (NOT $$IsEmpty:$customernameParent)
     012     :    New Object     : Group     
     013     :    Set Value      : Name      : $customernameParent
     
@@ -30,6 +30,37 @@
 
     190     :    Create Target
     200     : End If
+	
+
+
+
+[Function: StockGroup_MassterCreation]
+		
+    
+    00 : If : $$IsEmpty:($$Name:StockGroup:##Sales_StockItemMaster_productgroup) AND (NOT $$IsEmpty:##Sales_StockItemMaster_productgroup)
+    10 :    NEW OBJECT : StockGroup
+    20 :    Set Value  : NAME   : ##Sales_StockItemMaster_productgroup
+    30 :    Create TARGET
+    40 : End If
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [Function: SalesAccountLedgerMasterCreation]
 	
@@ -52,21 +83,17 @@
 
 
 [Function: MasterStocItemCreation]
-	
-		
-				/*StacItem*/
+					/*StacItem*/
 
-
-	010 : If : NOT $$IsObjectExists:StockItem:##Sales_StockItemMaster_product
-        020 : NEW OBJECT : StockItem
-        030 : SET VALUE  : Name      : $$LocaleString:##Sales_StockItemMaster_product
-        040 : SET VALUE  : Parent    : $$LocaleString:$parent
-        
-
-        050 : SET VALUE  : BaseUnits : $$LocaleString:##Sales_Master_productunit
-        
-        060 : CREATE TARGET
-    070 : End If
+    00 : If : $$IsEmpty:($$Name:StockItem:##Sales_StockItemMaster_product)
+    10 :    NEW OBJECT : StockItem
+    20 :    Set Value  : NAME           : ##Sales_StockItemMaster_product
+ 
+	30 :    Set Value  : PARENT         : ##Sales_StockItemMaster_productgroup
+    
+    40 :    Set Value  : BASEUNITS      : ##Sales_Master_productunit
+    50 :    Create TARGET
+    60 : End If
 
 
 [Function: Master_Productgodown_Creation]
@@ -107,67 +134,69 @@
     1010 : End If
 	
 
+  /*
+[#Menu: Gateway of Tally]    
+		
+	
+Add	: Key Item	: After	: @@locQuit	: "Testing"		: T : Call	: SalesIGST_LedgerCreation
 
+*/
 
 [Function: SalesCGST_LedgerCreation]
 	
-	
-010 : If : NOT $$IsObjectExists:Ledger:##Sales_GST_Ledger_Taxledger
+
+	010		: If	: $$IsEmpty:$Name:Ledger:$Taxledger
 	
 	020		: NEW OBJECT	: Ledger	
 	
-	030		: SET VALUE	: Name					: $$LocaleString:##Sales_GST_Ledger_Taxledger
-	040		: SET VALUE	: Parent				: $$LocaleString:##Sales_GST_Ledger_TaxLedgerParent
-	050		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
-	060		: SET VALUE	: GSTDUTYHEAD           : $$LocaleString:"CGST"
-	070		: SET VALUE	: RATEOFTAXCALCULATION  : ##Sales_GST_Ledger_rateofpercentage
+	030		: SET VALUE	: Name					: $$LocaleString:"Output  CGST"
+	040		: SET VALUE	: Parent				: $$LocaleString:"Duties & Taxes"
+	045		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
+	050		: SET VALUE	: GSTDUTYHEAD			: $$LocaleString:"CGST"
+	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:"18"
 	180 	: Set Target:...
 	190		: Create Target
 
-200		: End If
-
-
-
-
-
+	200		: End If
 
 
 [Function: SalesSGST_LedgerCreation]
-	
-	
-	010 : If : NOT $$IsObjectExists:Ledger:##Sales_GST_Ledger_Taxledger
-	
-	020		: NEW OBJECT	: Ledger	
-	
-	030		: SET VALUE	: Name					: $$LocaleString:##Sales_GST_Ledger_Taxledger
-	040		: SET VALUE	: Parent				: $$LocaleString:##Sales_GST_Ledger_TaxLedgerParent
-	050		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
-	060		: SET VALUE	: GSTDUTYHEAD           : $$LocaleString:"SGST/UTGST"
-	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:##Sales_GST_Ledger_rateofpercentage
-	180 	: Set Target:...
-	190		: Create Target
+		
 
+	010		: If	: $$IsEmpty:$Name:Ledger:$Taxledger
+	020		: NEW OBJECT	: Ledger
+
+	030		: SET VALUE	: Name					: $$LocaleString:"Output SGST"
+	040		: SET VALUE	: Parent				: $$LocaleString:"Duties & Taxes"
+	045		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
+	050		: SET VALUE	: GSTDUTYHEAD			: $$LocaleString:"SGST/UTGST"
+	070		: SET VALUE	: RATEOFTAXCALCULATION	: $$LocaleString:"9"
+	180		: Set Target	: ...
+	190		: Create Target
 	200		: End If
 
-
-
+	
+	
+	
 
 [Function: SalesIGST_LedgerCreation]
 	
-	010 : If : NOT $$IsObjectExists:Ledger:##Sales_GST_Ledger_Taxledger
+	010		: If	: $$IsEmpty:$Name:Ledger:$Taxledger
 	
 	020		: NEW OBJECT	: Ledger	
 	
-	030		: SET VALUE	: Name					: $$LocaleString:##Sales_GST_Ledger_Taxledger
-	040		: SET VALUE	: Parent				: $$LocaleString:##Sales_GST_Ledger_Taxledger
+	030		: SET VALUE	: Name					: $$LocaleString:"Output  IGST Testing"
+	040		: SET VALUE	: Parent				: $$LocaleString:"Duties & Taxes"
 	050		: SET VALUE	: TAXTYPE				: $$LocaleString:"GST"
 	060		: SET VALUE	: GSTDUTYHEAD           : $$LocaleString:"IGST"
-	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:##Sales_GST_Ledger_rateofpercentage
+	070		: SET VALUE	: RATEOFTAXCALCULATION  : $$LocaleString:"18"
 	180 	: Set Target:...
 	190		: Create Target
 
 	200		: End If
 
+	
+	
 
 
 [Function: SalesRound_MasterCreation]
@@ -185,3 +214,16 @@
         080 : CREATE TARGET
         
     090 : End If
+	
+
+
+
+
+
+
+
+
+
+
+
+

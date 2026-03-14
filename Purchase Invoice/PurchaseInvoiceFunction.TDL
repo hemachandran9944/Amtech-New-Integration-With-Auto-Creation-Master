@@ -17,11 +17,12 @@
 	Variable	: Download_TRANS_invoicenumber 			: String
 	Variable	: Download_TRANS_invoicedate			: String
 	Variable	: Download_TRANS_customername			: String
-	Variable	: Download_TRANS_
+	Variable	: Download_TRANS_customerParent			: String	/*New Variable*/	
 	Variable	: Download_TRANS_VchType				: String
 	Variable	: Download_TRANS_invoicemode			: String
 	Variable	: Download_TRANS_reference				: String
 	Variable	: Download_TRANS_salesledger			: String
+	Variable	: Download_TRANS_salesledgerParent		: String  /*New Variable*/
 	Variable	: Download_TRANS_deliverynoteno			: String
 	Variable	: Download_TRANS_deliverynotedate		: String
 	Variable	: Download_TRANS_dispatchdocno			: String
@@ -50,6 +51,7 @@
 	
 														
 	Variable	: Download_TRANS_invoicenumber 			: String
+	Variable	: Download_TRANS_productgroup			: String
 	Variable	: Download_TRANS_product				: String
 	Variable	: Download_TRANS_productdescription		: String
 	Variable	: Download_TRANS_parent					: String
@@ -72,8 +74,8 @@
 	Variable	: Purchase_CCAMOUNT                     : String
 
 	Variable	: Download_TRANS_invoicenumber 			: String
-	Variable	: Download_TRANS_additionalledger		: String
-	Variable	: Download_TRANS_parent					: String
+	Variable	: Download_TRANS_Taxledger				: String
+	Variable	: Download_TRANS_Taxparent				: String
 	Variable	: Download_TRANS_rateofpercentage		: String
 	Variable	: Download_TRANS_additionalledgervalue	: String
 	
@@ -85,6 +87,7 @@
 /*---------------------------------------- D.Hemachandran-----------------------------------------------------*/
 
 	Variable : Additionalledgerlist_AdditionalLedgername 	: String
+	Variable : Additionalledgerlist_Additionalparent		: String
     Variable : Additionalledgerlist_DRCR                    : String
     Variable : Additionalledgerlist_AdditionalAMOUNT        : String
     
@@ -149,17 +152,22 @@
 
 	140		: Walk Collection: purchaselist 
 	
-	141		: Set	: Download_TRANS_customername		: $$LocaleString:$customername
-	142		: Set	: Download_TRANS_salesledger		: $$LocaleString:$salesledger
+	141A	: Set	: Download_TRANS_customername		: $$LocaleString:$customername
+	141B	: Set	: Download_TRANS_customerParent		: $$LocaleString:$customerParent
+	142A	: Set	: Download_TRANS_salesledger		: $$LocaleString:$salesledger
+	142B	: Set	: Download_TRANS_salesledgerParent	: $$LocaleString:$salesledgerParent				
 
 	143		: Call	: PurLedgerMasterCreate
 	144A	: Call	: PurchaseAcccountsLedger_AutoCreation
 	
 	144B	: Walk Collection	: vchproductlist_pur
 	
-	144C	: Set	: Download_TRANS_product				: $$LocaleString:$product	
+	144C	: Set	: Download_TRANS_product				: $$LocaleString:$product
+	144CC	: Set	: Download_TRANS_productgroup			: $$LocaleString:$productgroup
     144D	: Set	: Download_TRANS_productgodown			: $$LocaleString:$productgodown
     144E	: Set	: Download_TRANS_productunit			: $$LocaleString:$productunit
+	
+	144EE	: Call	: MasterCreation_productgroup
 	
 	144F    :  Call : MsaterUnit_AutoCreation           /* Unit Create */
 	144G    :  Call : MasterStocItem_AutoCreation       /*Item Create  */
@@ -167,9 +175,9 @@
 	144GGG  :  End Walk
 
 
-	145A	: Walk Collection	: vchledgerlist_pur
+	145A	: Walk Collection	: Taxlist_pur
 		
-	145B	: Set	: Download_TRANS_additionalledger		: $$LocaleString:$additionalledger
+	145B	: Set	: Download_TRANS_Taxledger		: $$LocaleString:$Taxledger
 	
 	145C	: Call	: MasterCGST_LedgerCreation
 	
@@ -303,7 +311,8 @@
 	500		: Walk Collection: vchproductlist_pur 
 	
 	510		: Set	: Download_TRANS_invoicenumber 			: $$LocaleString:$invoicenumber 		
-	520		: Set	: Download_TRANS_product				: $$LocaleString:$product				
+	520		: Set	: Download_TRANS_product				: $$LocaleString:$product
+	523		: Set	: Download_TRANS_productgroup			: $$LocaleString:$productgroup
 	525		: Set	: Download_TRANS_STK_product			: $$LocaleString:$Name:StockItem:$product				
 	530		: Set	: Download_TRANS_productdescription		: $$LocaleString:$productdescription	
 	540		: Set	: Download_TRANS_parent					: $$LocaleString:$parent				
@@ -323,9 +332,12 @@
 	651		: Set	: Download_TRANS_productvalue			: $$LocaleString:$productvalue			
 	
 
-		
-
-
+	652A		: Msg Box	: "652A" 	: ##Download_TRANS_productgroup
+	
+	652B		: Msg Box	: "652B"	: ##Download_TRANS_productgodown
+	
+	652C		: Msg Box	:  "652C"	: ##Download_TRANS_productunit
+	
 
 	654		: If: (Not($$IsEmpty:##Download_TRANS_STK_product))
 	
@@ -393,18 +405,21 @@
 	684  	: End If
 	
 	685		: End Walk 
-	700		: Walk Collection: vchledgerlist_pur 
+	700		: Walk Collection: Taxlist_pur 
 	710		: Set	: Download_TRANS_invoicenumber 			: $$LocaleString:$invoicenumber 		
-	720		: Set	: Download_TRANS_additionalledger		: $$LocaleString:$additionalledger		
-	721		: Set	: Download_TRANS_ledger					: $$LocaleString:$Name:Ledger:$additionalledger		
-	730		: Set	: Download_TRANS_parent					: $$LocaleString:$parent				
+	720		: Set	: Download_TRANS_Taxledger				: $$LocaleString:$Taxledger		
+	721		: Set	: Download_TRANS_ledger					: $$LocaleString:$Name:Ledger:$$Taxledger		
+	730		: Set	: Download_TRANS_Taxparent				: $$LocaleString:$Taxparent				
 	740		: Set	: Download_TRANS_rateofpercentage		: $$LocaleString:$rateofpercentage		
-	745		: Set	: Download_TRANS_additionalledgervalue	: $$LocaleString:$additionalledgervalue	
+	745A	: Set	: Download_TRANS_additionalledgervalue	: $$LocaleString:$additionalledgervalue	
 	
-	746		: If: (Not($$IsEmpty:##Download_TRANS_ledger)) AND (Not($$IsEmpty:##Download_TRANS_additionalledger))
+	745B	: Msg Box	: "745B"	: ##Download_TRANS_Taxledger + ##Download_TRANS_Taxparent
+
+	
+	746 : If : (NOT $$IsEmpty:##Download_TRANS_Taxledger)
 
 	750A	: INSERT COLLECTION OBJECT				: LEDGERENTRIES
-	750B	: SET VALUE		: LedgerName			: ##Download_TRANS_additionalledger
+	750B	: SET VALUE		: LedgerName			: ##Download_TRANS_Taxledger
 	750C	: SET VALUE		: ISDEEMEDPOSITIVE		: Yes
 	750D	: SET VALUE		: LEDGERFROMITEM		: No
 	750E	: SET VALUE		: REMOVEZEROENTRIES		: No
@@ -420,7 +435,7 @@
 	752 	: Set File Log On
 	753 	: OPEN FILE : @@currentdate_LogFile : Text : Write
 	754 	: Write File Line: "*****************"
-	755 	: Write File Line: "["+@@currentDate+" "+$$SysInfo:SystemTimeHMS+"] Error: Yes - Voucher Type: Purchase, Voucher Number: "+##Download_TRANS_invoicenumber+", Company Code: "+##Download_TRANS_tallycode+', Status: "'+##Download_TRANS_additionalledger+'" Ledger Not Found'
+	755 	: Write File Line: "["+@@currentDate+" "+$$SysInfo:SystemTimeHMS+"] Error: Yes - Voucher Type: Purchase, Voucher Number: "+##Download_TRANS_invoicenumber+", Company Code: "+##Download_TRANS_tallycode+', Status: "'+##Download_TRANS_Taxledger+'" Ledger Not Found'
 	757 	: Close Target File
 	758 	: Set File Log Off
 
@@ -429,7 +444,7 @@
 	758c	: Set : CommonVariableUpdatePur[$$LOOPINDEX].INVOICETYPES 	: ##Download_TRANS_VchType
 	758d	: Set : CommonVariableUpdatePur[$$LOOPINDEX].VRDATE    		: ##Download_TRANS_invoicedate
 	758e	: Set : CommonVariableUpdatePur[$$LOOPINDEX].APIRESULT_STATUS: "Error"
-	758f	: Set : CommonVariableUpdatePur[$$LOOPINDEX].APIRESULT_Msg	: ##Download_TRANS_additionalledger+" Ledger Not Found"
+	758f	: Set : CommonVariableUpdatePur[$$LOOPINDEX].APIRESULT_Msg	: ##Download_TRANS_Taxledger+" Ledger Not Found"
 	
 	759 	: End If
 
@@ -443,6 +458,7 @@
 	761		: Walk Collection	: Additionalledgerlist
 	
 	770		: Set : Additionalledgerlist_AdditionalLedgername	  : $$LocaleString:$AdditionalLedgername
+	775		: Set : Additionalledgerlist_Additionalparent		  : $$LocaleString:$Additionalparent
 	780		: Set : Additionalledgerlist_DRCR                     : $$LocaleString:$DRCR                
 	790		: Set : Additionalledgerlist_AdditionalAMOUNT         : $$LocaleString:$AdditionalAMOUNT   
 	
@@ -483,11 +499,12 @@
 	
 	920		: Set : RoundOff_RoundoffNAME	: $$LocaleString:$RoundoffNAME		
 	930		: Set : RoundOff_CODE           : $$LocaleString:$CODE           
-	940		: Set : RoundOff_parent         : $$LocaleString:$parent         
+	940		: Set : RoundOff_parent         : $$LocaleString:$RoundoffParent         
 	950		: Set : RoundOff_DRCR           : $$LocaleString:$DRCR           
 	960		: Set : RoundOff_RoundoffAMOUNT : $$LocaleString:$RoundoffAMOUNT 
 	
-	
+
+
 		
 	970		: Insert Collection Object			: LEDGERENTRIES
 	

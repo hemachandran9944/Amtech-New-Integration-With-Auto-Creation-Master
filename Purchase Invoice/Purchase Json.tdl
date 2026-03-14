@@ -76,6 +76,7 @@
 
 	Storage				: invoicenumber 		: String
 	Storage				: product				: String
+	Storage				: productgroup			: String
 	Storage				: productdescription	: String
 	Storage				: parent				: String
 	Storage				: partno				: String

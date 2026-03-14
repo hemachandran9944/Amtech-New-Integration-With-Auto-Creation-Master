@@ -49,6 +49,7 @@ Variable	: SalesFunction_Check	: String
 					
 		
 		Variable : Sales_StockItemMaster_product		: String
+		Variable : Sales_StockItemMaster_productgroup	: String
 		Variable : Sales_StockItemMaster_productqty     : String
 		Variable : Sales_StockItemMaster_productrate    : String
 		Variable : Sales_StockItemMaster_productvalue   : String
@@ -73,8 +74,22 @@ Variable	: SalesFunction_Check	: String
 		Variable : Sales_GST_Ledger_parent				    : String
 		Variable : Sales_GST_Ledger_rateofpercentage		: String
 		Variable : Sales_GST_Ledger_additionalledgervalue   : String
+		
 
-			
+						/*SGST*/
+						
+		Variable : Sales_GST_Ledger_SGST_invoicenumber	    	: String
+		Variable : Sales_GST_Ledger_SGST_TaxledgerSGST          : String
+		Variable : Sales_GST_Ledger_SGST_TaxLedgerParent		: String
+		Variable : Sales_GST_Ledger_SGST_rateofpercentageSGST	: String
+		Variable : Sales_GST_Ledger_SGST_additionalledgervalue  : String
+		
+		
+		
+
+
+
+		
 					/*Additionalledgerlist Varaible*/
 					
 		Variable : Sales_Additionalledgerlist_AdditionalLedgername	: String
@@ -174,15 +189,17 @@ Variable	: SalesFunction_Check	: String
 	
 	506A		: Walk Collection	: vchproductlist_Sales
 	
-	506AA   	:  Set : Sales_StockItemMaster_product 	: $$LocaleString:$product
-	506B    	:  Set : Sales_Master_productgodown		: $$LocaleString:$productgodown
-	862BB		:  Set : Sales_Master_productunit		: $$LocaleString:$productunit 
+	506AA   	:  Set : Sales_StockItemMaster_product 		: $$LocaleString:$product
+	506AAA   	:  Set : Sales_StockItemMaster_productgroup	: $$LocaleString:$productgroup
+	506B    	:  Set : Sales_Master_productgodown			: $$LocaleString:$productgodown
+	506BB		:  Set : Sales_Master_productunit			: $$LocaleString:$productunit 
 	
-	506BBBB		:  Call: UnitsMaster_Creation
-	506BBBBB	:  Call: MasterStocItemCreation
-	506BBBBBB	:  Call: Master_Productgodown_Creation
+	506BBBB		:  Call: StockGroup_MassterCreation		 /*1. Group Create*/
+	506BBBBB	:  Call: UnitsMaster_Creation			 /*2. Unit Create*/
+	506BBBBBB	:  Call: MasterStocItemCreation			 /*3. StockItem Create*/
+	506BBBBBBB	:  Call: Master_Productgodown_Creation	 /*4. Godown Creat*/
 	
-	506BBBBBBB	: End Walk	
+	506BBBBBBBB	: End Walk	
 	
 	507A		: Walk Collection	: Taxlist_Sales
 	
@@ -191,7 +208,6 @@ Variable	: SalesFunction_Check	: String
 	507BB 		: Call : SalesCGST_LedgerCreation
 	508A 		: Call : SalesSGST_LedgerCreation
 	508B 		: Call : SalesIGST_LedgerCreation
-	508c 		: Call : SalesRound_MasterCreation
 	
 
 	509A		: End Walk
@@ -266,17 +282,15 @@ Variable	: SalesFunction_Check	: String
 
    820		: Walk Collection	: vchproductlist_Sales
    
-   830		: Set	: Sales_StockItemMaster_product			: $$LocaleString:$product		   
+   830		: Set	: Sales_StockItemMaster_product			: $$LocaleString:$product
+   835		: Set	: Sales_StockItemMaster_productgroup	: $$LocaleString:$productgroup
    840		: Set	: Sales_StockItemMaster_productqty      : $$LocaleString:$productqty 
    850		: Set	: Sales_StockItemMaster_productrate     : $$LocaleString:$productrate   
    860		: Set	: Sales_StockItemMaster_productvalue    : $$LocaleString:$productvalue  
    861		: Set	: Sales_Master_productgodown			: $$LocaleString:$productgodown
    862		: Set	: Sales_Master_productunit				: $$LocaleString:$productunit 
    
-
-
-
-
+   
    
    863		: If: (Not($$IsEmpty:##Sales_StockItemMaster_product))
 
@@ -347,12 +361,12 @@ Variable	: SalesFunction_Check	: String
 	1325	: Set : Sales_GST_Ledger_TaxLedgerParent		: $$Localestring:$TaxLedgerParent
     1330	: Set : Sales_GST_Ledger_parent				    : $$Localestring:$parent				 
     1340	: Set : Sales_GST_Ledger_rateofpercentage		: $$Localestring:$rateofpercentage		 
-    1345	: Set : Sales_GST_Ledger_additionalledgervalue  : $$Localestring:$additionalledgervalue 
+    1345	: Set : Sales_GST_Ledger_additionalledgervalue  : $$Localestring:$additionalledgervalue
 	
 	
-	1347	: Msg Box	: "1347" : ##Sales_GST_Ledger_rateofpercentage 
 	
-
+	
+								
 	1350	: If: (Not($$IsEmpty:##Sales_GST_Ledger_Taxledger))
 	
 	1360	: INSERT COLLECTION OBJECT				: LEDGERENTRIES
